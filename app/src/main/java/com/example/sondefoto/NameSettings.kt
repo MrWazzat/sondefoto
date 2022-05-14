@@ -14,11 +14,14 @@ class NameSettings : AppCompatActivity() {
     private lateinit var etFirstName : EditText
     private lateinit var etLastName : EditText
     override fun onCreate(savedInstanceState: Bundle?) {
+
+        val forceOpen = intent.getBooleanExtra("FORCE_OPEN", false)
+
         super.onCreate(savedInstanceState)
 
         sessionmanager = SessionManager(this)
 
-        if(isNameAlreadySetInSession()){
+        if(isNameAlreadySetInSession() && !forceOpen){
             openSaisieChantierActivity()
         }
 
@@ -54,7 +57,8 @@ class NameSettings : AppCompatActivity() {
     }
 
     private fun isNameAlreadySetInSession(): Boolean{
-        return !sessionmanager.getString("FIRST_NAME").isNullOrEmpty() || !sessionmanager.getString("LAST_NAME").isNullOrEmpty()
+        return !sessionmanager.getString(FIRST_NAME_KEY).isNullOrEmpty() || !sessionmanager.getString(
+            LAST_NAME_KEY).isNullOrEmpty()
     }
 
     private fun openSaisieChantierActivity() {

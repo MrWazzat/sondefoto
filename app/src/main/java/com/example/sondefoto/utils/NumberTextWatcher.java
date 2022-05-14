@@ -5,33 +5,46 @@ import java.text.ParseException;
 
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.widget.EditText;
 
 public class NumberTextWatcher implements TextWatcher {
 
-    private DecimalFormat df;
-    private DecimalFormat dfnd;
-    private boolean hasFractionalPart;
-
+    private DecimalFormat formatter;
     private EditText et;
+
+    private boolean wasTextJustErased = false;
 
     public NumberTextWatcher(EditText et)
     {
-        df = new DecimalFormat("#,###.##");
-        df.setDecimalSeparatorAlwaysShown(true);
-        dfnd = new DecimalFormat("#,###");
+        formatter = new DecimalFormat("##.###");
+        formatter.setDecimalSeparatorAlwaysShown(true);
         this.et = et;
-        hasFractionalPart = false;
     }
 
     @Override
     public void afterTextChanged(Editable s)
     {
+
+
         et.removeTextChangedListener(this);
 
         int currLen = et.getText().length();
-        if(currLen == 3){
-            et.setText(et.getText() + ".");
+        String currText = et.getText().toString();
+
+
+        Log.i("TW", ""+currText.charAt(currLen-1));
+        if(wasTextJustErased && currLen == 3 && currText.charAt(currLen-1) == '.'){
+            et.setText(currText.substring(0, currLen - 1));
+        }
+
+        if(wasTextJustErased)
+            return;
+
+        if(currLen == 2){
+            Log.i("TW", "Adding a dot");
+            currText = currText + ".";
+            et.setText(currText);
             et.setSelection(et.getText().length());
         }
 
@@ -41,17 +54,16 @@ public class NumberTextWatcher implements TextWatcher {
     @Override
     public void beforeTextChanged(CharSequence s, int start, int count, int after)
     {
+        wasTextJustErased = (count == 1 && after == 0);
+        Log.i("TW : s", s.toString());
+        Log.i("TW : start", "" + start);
+        Log.i("TW : count",""+count);
+        Log.i("TW : after", ""+after);
     }
 
     @Override
     public void onTextChanged(CharSequence s, int start, int before, int count)
     {
-        if (s.toString().contains(String.valueOf(df.getDecimalFormatSymbols().getDecimalSeparator())))
-        {
-            hasFractionalPart = true;
-        } else {
-            hasFractionalPart = false;
-        }
     }
 
 }

@@ -26,7 +26,12 @@ class SaisieChantier : AppCompatActivity() {
         firstName = sessionManager.getString(FIRST_NAME_KEY)
         lastName = sessionManager.getString(LAST_NAME_KEY)
 
-        binding.tvWelcome.text = String.format("%s %s", firstName, lastName)
+        binding.mbName.text = String.format("%s %s", firstName, lastName)
+
+        binding.mbName.setOnClickListener{
+            openNameSettings()
+        }
+
         val et = binding.etNumeroChantier
         et.transformationMethod = null
         et.addTextChangedListener(NumberTextWatcher(et))
@@ -46,6 +51,12 @@ class SaisieChantier : AppCompatActivity() {
 
     private fun openPictureView(){
         val intent = Intent(this, MainActivity::class.java)
+        startActivity(intent);
+    }
+
+    private fun openNameSettings(){
+        val intent = Intent(this, NameSettings::class.java)
+        intent.putExtra("FORCE_OPEN", true);
         startActivity(intent);
     }
 }

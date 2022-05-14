@@ -45,14 +45,17 @@
             android:id="@+id/btn_cancel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="30dp"
+            android:layout_margin="20dp"
+            android:textSize="16sp"
             android:text="Annuler" />
 
         <Button
             android:id="@+id/btn_validate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="30dp"
+            android:textSize="16sp
+"
+            android:layout_margin="20dp"
             android:text="Valider" />
 
     </LinearLayout>

@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center"
-    android:background="@color/design_default_color_secondary"
+    android:background="@drawable/bg"
     tools:context=".NameSettings">
 
     <com.google.android.material.card.MaterialCardView

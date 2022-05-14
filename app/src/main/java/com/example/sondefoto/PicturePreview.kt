@@ -3,12 +3,15 @@ package com.example.sondefoto
 import android.graphics.BitmapFactory
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.example.sondefoto.communication.SondeforMailer
 import com.example.sondefoto.databinding.ActivityPicturePreviewBinding
 import com.example.sondefoto.databinding.ActivitySaisieChantierBinding
 
 class PicturePreview : AppCompatActivity() {
 
     private lateinit var binding: ActivityPicturePreviewBinding
+
+    private val mailer = SondeforMailer()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -19,5 +22,10 @@ class PicturePreview : AppCompatActivity() {
         val bitmap = BitmapFactory.decodeFile(imagePath)
 
         binding.imageView.setImageBitmap(bitmap)
+        binding.btnValidate.setOnClickListener {
+            if (imagePath != null) {
+                mailer.sendMail(imagePath)
+            }
+        }
     }
 }

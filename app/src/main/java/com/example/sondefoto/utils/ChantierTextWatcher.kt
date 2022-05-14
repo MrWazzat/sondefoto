@@ -2,8 +2,12 @@ package com.example.sondefoto.utils
 
 import android.text.Editable
 import android.text.TextWatcher
+import android.widget.EditText
 
-class ChantierTextWatcher : TextWatcher{
+class ChantierTextWatcher(editText: EditText) : TextWatcher{
+
+
+
     override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
         TODO("Not yet implemented")
     }
