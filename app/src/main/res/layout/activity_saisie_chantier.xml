@@ -9,6 +9,10 @@
     tools:context=".SaisieChantier"
     android:orientation="vertical">
 
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
     <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -24,21 +28,6 @@
             android:layout_margin="16dp"
             android:gravity="center"
             android:orientation="vertical">
-
-<!--            <TextView-->
-<!--                android:id="@+id/tv_welcome"-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:textAllCaps="true"-->
-<!--                android:textSize="30sp"-->
-<!--                android:textStyle="bold"-->
-<!--                android:gravity="center"-->
-<!--                android:textColor="@color/dark_grey_text"-->
-<!--                android:drawableRight="@drawable/edit"-->
-<!--                android:drawablePadding="2dp"-->
-<!--                tools:text="Raphaël MARZAT"-->
-
-<!--                />-->
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/mb_name"
@@ -58,7 +47,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Saisissez le numéro du chantier"
+                android:text="Saisissez le numéro et la date du chantier"
                 android:textSize="16sp"
                 android:textStyle="bold"
                 android:gravity="center"
@@ -66,6 +55,8 @@
                 />
 
             <com.google.android.material.textfield.TextInputLayout
+                app:boxStrokeColor="@color/primaryColor"
+                app:hintTextColor="@color/primaryColor"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
@@ -83,12 +74,20 @@
                 </androidx.appcompat.widget.AppCompatEditText>
             </com.google.android.material.textfield.TextInputLayout>
 
+            <DatePicker
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:datePickerMode="spinner"
+                android:calendarViewShown="false"
+                ></DatePicker>
+
             <Button
                 android:id="@+id/btn_continue"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
-                android:background="@color/design_default_color_primary"
+                android:padding="16dp"
+                android:backgroundTint="@color/primaryColor"
                 android:text="Continuer"
                 android:textColor="@color/white"
                 />
@@ -96,5 +95,5 @@
         </LinearLayout>
 
     </com.google.android.material.card.MaterialCardView>
-
+    </ScrollView>
 </LinearLayout>

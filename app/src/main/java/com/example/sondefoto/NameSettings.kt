@@ -31,6 +31,9 @@ class NameSettings : AppCompatActivity() {
         etFirstName = binding.etFirstName
         etLastName = binding.etLastName
 
+        etFirstName.setText(sessionmanager.getString(FIRST_NAME_KEY))
+        etLastName.setText(sessionmanager.getString(LAST_NAME_KEY))
+
         binding.buttonStart.setOnClickListener {
             if(validateNameFields()){
                 saveNameSettings()

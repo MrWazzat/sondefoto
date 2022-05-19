@@ -45,6 +45,8 @@
             android:id="@+id/btn_cancel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:padding="12dp"
+            android:backgroundTint="@color/errorColor"
             android:layout_margin="20dp"
             android:textSize="16sp"
             android:text="Annuler" />
@@ -53,8 +55,9 @@
             android:id="@+id/btn_validate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="16sp
-"
+            android:textSize="16sp"
+            android:padding="12dp"
+            android:backgroundTint="@color/primaryColor"
             android:layout_margin="20dp"
             android:text="Valider" />
 
