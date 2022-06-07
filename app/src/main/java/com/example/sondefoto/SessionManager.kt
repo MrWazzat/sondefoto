@@ -8,6 +8,7 @@ const val SHARED_PREF_NAME = "SONDEFOR_MAILING_APP"
 const val FIRST_NAME_KEY = "first_name"
 const val LAST_NAME_KEY = "last_name"
 const val NUM_CHANTIER_KEY = "num_chantier"
+const val PRODUCTION_DATE_KEY = "production_date"
 
 
 class SessionManager(context: Context) {

@@ -66,7 +66,7 @@
                     android:id="@+id/et_numero_chantier"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="XX.XXX"
+                    android:hint="@string/xx_xxxx"
                     android:inputType="numberPassword"
                     android:textColor="@color/dark_grey_text"
                     android:textColorHint="@color/light_grey_text"
@@ -75,11 +75,12 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <DatePicker
+                android:id="@+id/dp_date_production"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:datePickerMode="spinner"
                 android:calendarViewShown="false"
-                ></DatePicker>
+                />
 
             <Button
                 android:id="@+id/btn_continue"

@@ -13,14 +13,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="10sp"
-        android:text="Chantier n°XXXXXX"
         android:textAlignment="center"
         android:textColor="@color/dark_grey_text"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:text="Chantier n°XX.XXX" />
+        tools:text="Chantier n°XX.XXXX" />
 
     <ImageView
         android:layout_height="0dp"

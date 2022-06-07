@@ -1,13 +1,14 @@
 package com.example.sondefoto
 
-import android.content.Context
 import android.content.Intent
-import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
+import android.widget.DatePicker
+import android.widget.EditText
+import androidx.appcompat.widget.AppCompatEditText
 import com.example.sondefoto.databinding.ActivitySaisieChantierBinding
 import com.example.sondefoto.utils.NumberTextWatcher
+import java.util.*
 
 class SaisieChantier : AppCompatActivity() {
     private lateinit var binding: ActivitySaisieChantierBinding
@@ -16,6 +17,7 @@ class SaisieChantier : AppCompatActivity() {
     private var firstName: String? = null
     private var lastName: String? = null
 
+    private var datePicker: DatePicker? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,22 +28,41 @@ class SaisieChantier : AppCompatActivity() {
         firstName = sessionManager.getString(FIRST_NAME_KEY)
         lastName = sessionManager.getString(LAST_NAME_KEY)
 
+        datePicker = binding.dpDateProduction
+        datePicker!!.descendantFocusability = DatePicker.FOCUS_BLOCK_DESCENDANTS
+
         binding.mbName.text = String.format("%s %s", firstName, lastName)
 
         binding.mbName.setOnClickListener{
             openNameSettings()
         }
 
-        val et = binding.etNumeroChantier
-        et.transformationMethod = null
-        et.addTextChangedListener(NumberTextWatcher(et))
+        val etNumeroChantier = binding.etNumeroChantier
+        etNumeroChantier.transformationMethod = null
+        etNumeroChantier.addTextChangedListener(NumberTextWatcher(etNumeroChantier))
 
         binding.btnContinue.setOnClickListener {
-            saveNumChantier()
-            openPictureView()
+            if(validateChantierField(etNumeroChantier)){
+                saveNumChantier()
+                saveProductionDate()
+                openPictureView()
+            }
         }
 
         setContentView(binding.root)
+    }
+
+    private fun validateChantierField(etNumeroChantier: EditText): Boolean {
+        if(etNumeroChantier.text.length < 7){
+            etNumeroChantier.setError("Format Incorrect")
+            return false
+        }
+        return true
+    }
+
+    private fun saveProductionDate() {
+        val productionDate = binding.dpDateProduction.getFormattedDate()
+        sessionManager.saveString(PRODUCTION_DATE_KEY, productionDate)
     }
 
     private fun saveNumChantier(){
@@ -58,5 +79,9 @@ class SaisieChantier : AppCompatActivity() {
         val intent = Intent(this, NameSettings::class.java)
         intent.putExtra("FORCE_OPEN", true);
         startActivity(intent);
+    }
+
+    fun DatePicker.getFormattedDate(): String {
+        return "$dayOfMonth/${month+1}/$year"
     }
 }

@@ -145,6 +145,7 @@ class MainActivity : AppCompatActivity() {
                         onImageSaved(output: ImageCapture.OutputFileResults) {
                     capture_to_preview.putExtra("IMAGE_PATH", imageFile.absolutePath.toString())
                     startActivity(capture_to_preview)
+                    finish()
                 }
 
             }
