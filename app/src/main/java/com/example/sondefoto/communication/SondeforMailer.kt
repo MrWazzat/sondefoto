@@ -7,7 +7,9 @@ import android.widget.Toast
 import androidx.core.content.ContextCompat.startActivity
 import co.nedim.maildroidx.MaildroidX
 import co.nedim.maildroidx.MaildroidXType
+import com.example.sondefoto.BuildConfig
 import com.example.sondefoto.MainActivity
+import com.example.sondefoto.R
 import com.example.sondefoto.SaisieChantier
 
 class SondeforMailer private constructor(
@@ -31,8 +33,8 @@ class SondeforMailer private constructor(
             .smtpPassword(SMTP_PASSWORD)
             .port(SMTP_PORT)
             .type(MaildroidXType.HTML)
-            .to("raphael.marzat@gmail.com")
-            .from("test@sondefor.fr")
+            .to(BuildConfig.RECEIVER_EMAIL)
+            .from(BuildConfig.SENDER_EMAIL)
             .subject("$firstName $lastName : $numeroChantier ($productionDate)")
             .body("Ci-joint, le document lié au chantier $numeroChantier du ${productionDate}. \n" +
                         "Cordialement, \n" +

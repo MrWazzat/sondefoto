@@ -82,6 +82,6 @@ class SaisieChantier : AppCompatActivity() {
     }
 
     fun DatePicker.getFormattedDate(): String {
-        return "$dayOfMonth/${month+1}/$year"
+        return "$dayOfMonth/${(month+1).toString().padStart(2,'0')}/${year.toString().padStart(2,'0')}"
     }
 }
