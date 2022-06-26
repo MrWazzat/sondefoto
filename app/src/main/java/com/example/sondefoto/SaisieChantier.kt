@@ -16,6 +16,7 @@ class SaisieChantier : AppCompatActivity() {
 
     private var firstName: String? = null
     private var lastName: String? = null
+    private var numChantier: String? = null
 
     private var datePicker: DatePicker? = null
 
@@ -27,12 +28,14 @@ class SaisieChantier : AppCompatActivity() {
 
         firstName = sessionManager.getString(FIRST_NAME_KEY)
         lastName = sessionManager.getString(LAST_NAME_KEY)
+        numChantier = sessionManager.getString(NUM_CHANTIER_KEY)
 
         datePicker = binding.dpDateProduction
         datePicker!!.descendantFocusability = DatePicker.FOCUS_BLOCK_DESCENDANTS
 
         binding.mbName.text = String.format("%s %s", firstName, lastName)
-
+        binding.etNumeroChantier.setText(numChantier)
+        
         binding.mbName.setOnClickListener{
             openNameSettings()
         }
