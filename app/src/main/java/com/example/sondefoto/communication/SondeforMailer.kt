@@ -15,6 +15,7 @@ import com.example.sondefoto.SaisieChantier
 class SondeforMailer private constructor(
     val firstName: String?,
     val lastName: String?,
+    val phoneNumber: String?,
     val numeroChantier: String?,
     val productionDate: String?,
     val attachmentPath: String
@@ -35,7 +36,7 @@ class SondeforMailer private constructor(
             .type(MaildroidXType.HTML)
             .to(BuildConfig.RECEIVER_EMAIL)
             .from(BuildConfig.SENDER_EMAIL)
-            .subject("$firstName $lastName : $numeroChantier ($productionDate)")
+            .subject("$firstName $lastName : $numeroChantier ($productionDate) || $phoneNumber")
             .body("Ci-joint, le document lié au chantier $numeroChantier du ${productionDate}. \n" +
                         "Cordialement, \n" +
                         "$firstName $lastName")
@@ -62,15 +63,17 @@ class SondeforMailer private constructor(
     data class Builder(
         var firstName: String? = null,
         var lastName: String? = null,
+        var phoneNumber: String? = null,
         var numeroChantier: String? = null,
         var productionDate: String? = null,
         var attachmentPath: String = "") {
 
         fun firstName(firstName: String) = apply { this.firstName = firstName }
         fun lastName(lastName: String) = apply { this.lastName = lastName }
+        fun phoneNumber(phoneNumber: String) = apply { this.phoneNumber = phoneNumber }
         fun numeroChantier(numeroChantier: String) = apply { this.numeroChantier = numeroChantier }
         fun productionDate(productionDate: String) = apply { this.productionDate = productionDate }
         fun attachmentPath(attachmentPath: String) = apply { this.attachmentPath = attachmentPath }
-        fun build() = SondeforMailer(firstName, lastName, numeroChantier, productionDate, attachmentPath)
+        fun build() = SondeforMailer(firstName, lastName, phoneNumber, numeroChantier, productionDate, attachmentPath)
     }
 }
