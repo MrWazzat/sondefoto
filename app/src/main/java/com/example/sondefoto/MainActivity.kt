@@ -8,6 +8,7 @@ import android.content.SharedPreferences
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Environment
 import android.provider.MediaStore
 import android.util.Log
 import androidx.activity.result.contract.ActivityResultContracts
@@ -106,29 +107,11 @@ class MainActivity : AppCompatActivity() {
         // Get a stable reference of the modifiable image capture use case
         val imageCapture = imageCapture ?: return
 
-        // Create time stamped name and MediaStore entry.
-        val name = SimpleDateFormat(FILENAME_FORMAT, Locale.US)
-            .format(System.currentTimeMillis())
-        val contentValues = ContentValues().apply {
-            put(MediaStore.MediaColumns.DISPLAY_NAME, name)
-            put(MediaStore.MediaColumns.MIME_TYPE, "image/jpeg")
-            if (Build.VERSION.SDK_INT > Build.VERSION_CODES.P) {
-                put(MediaStore.Images.Media.RELATIVE_PATH, "Pictures/CameraX-Image")
-            }
-        }
-
-        val imageFile = File(cacheDir.absolutePath+"/"+System.currentTimeMillis()+ ".jpg") // You can store the image in the cache for example using `cacheDir.absolutePath` as a path.
+        val basePath = getExternalFilesDir(Environment.DIRECTORY_PICTURES).toString()
+        Log.i("Path : ", basePath)
+        val imageFile = File( basePath + "/"+System.currentTimeMillis()+ ".jpg") // You can store the image in the cache for example using `cacheDir.absolutePath` as a path.
         val outputFileOptions = ImageCapture.OutputFileOptions
             .Builder(imageFile)
-            .build()
-
-        // Create output options object which contains file + metadata
-        val outputOptions = ImageCapture.OutputFileOptions
-            .Builder(
-                contentResolver,
-                MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
-                contentValues
-            )
             .build()
 
         // Set up image capture listener, which is triggered after photo has
