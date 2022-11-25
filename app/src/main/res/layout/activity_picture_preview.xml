@@ -8,6 +8,18 @@
     android:orientation="vertical"
     tools:context=".PicturePreview">
 
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/fragment_container_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@+id/linearLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_margin="50px"
+        android:translationZ="90dp"
+        tools:layout="@layout/loading_dialog" />
+
     <TextView
         android:id="@+id/tv_num_chantier"
         android:layout_width="match_parent"

@@ -4,12 +4,9 @@ import android.content.Context
 import android.content.Intent
 import android.util.Log
 import android.widget.Toast
-import androidx.core.content.ContextCompat.startActivity
 import co.nedim.maildroidx.MaildroidX
 import co.nedim.maildroidx.MaildroidXType
 import com.example.sondefoto.BuildConfig
-import com.example.sondefoto.MainActivity
-import com.example.sondefoto.R
 import com.example.sondefoto.SaisieChantier
 
 class SondeforMailer private constructor(
@@ -18,7 +15,10 @@ class SondeforMailer private constructor(
     val phoneNumber: String?,
     val numeroChantier: String?,
     val productionDate: String?,
-    val attachmentPath: String
+    val attachmentPath: String,
+
+    val successCallback: () -> Unit,
+    val failureCallback: () -> Unit,
 ){
 
     private val SMTP_SERVER = "email.sondefor.fr"
@@ -44,16 +44,13 @@ class SondeforMailer private constructor(
             .onCompleteCallback(object : MaildroidX.onCompleteCallback {
                 override val timeout: Long = 3000
                 override fun onSuccess() {
-                    Log.d("MaildroidX", "SUCCESS")
-                    Toast.makeText(context, "Mail envoyé avec succès", Toast.LENGTH_SHORT).show()
-                    val intent = Intent(context, SaisieChantier::class.java)
-                    intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
-                    context.startActivity(intent)
+                    Log.d("SondeforMailer","Mail sent successfully")
+                    successCallback()
                 }
 
                 override fun onFail(errorMessage: String) {
-                    Log.d("MaildroidX", "FAIL")
-                    Toast.makeText(context, "Erreur lors de l'envoi du mail", Toast.LENGTH_SHORT).show()
+                    Log.d("SondeforMailer","Mail sent successfully")
+                    failureCallback()
                 }
             })
             .mail()
@@ -66,7 +63,9 @@ class SondeforMailer private constructor(
         var phoneNumber: String? = null,
         var numeroChantier: String? = null,
         var productionDate: String? = null,
-        var attachmentPath: String = "") {
+        var attachmentPath: String = "",
+        var successCallback: () -> Unit = {},
+        var failureCallback: () -> Unit = {} ) {
 
         fun firstName(firstName: String) = apply { this.firstName = firstName }
         fun lastName(lastName: String) = apply { this.lastName = lastName }
@@ -74,6 +73,8 @@ class SondeforMailer private constructor(
         fun numeroChantier(numeroChantier: String) = apply { this.numeroChantier = numeroChantier }
         fun productionDate(productionDate: String) = apply { this.productionDate = productionDate }
         fun attachmentPath(attachmentPath: String) = apply { this.attachmentPath = attachmentPath }
-        fun build() = SondeforMailer(firstName, lastName, phoneNumber, numeroChantier, productionDate, attachmentPath)
+        fun successCallback(successCallback: () -> Unit) = apply { this.successCallback = successCallback }
+        fun failureCallback(failureCallback: () -> Unit) = apply { this.failureCallback = failureCallback }
+        fun build() = SondeforMailer(firstName, lastName, phoneNumber, numeroChantier, productionDate, attachmentPath, successCallback, failureCallback)
     }
 }

@@ -63,6 +63,7 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
+    implementation "androidx.fragment:fragment-ktx:1.2.5"
     //CameraX
     def camerax_version = "1.1.0-beta01"
     implementation "androidx.camera:camera-core:${camerax_version}"

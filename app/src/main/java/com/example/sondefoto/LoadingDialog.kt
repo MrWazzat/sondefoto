@@ -2,8 +2,9 @@ package com.example.sondefoto
 
 import android.app.Activity
 import android.app.AlertDialog
+import androidx.fragment.app.Fragment
 
-class LoadingDialog(private val activity: Activity) {
+class LoadingDialog(private val activity: Activity) : Fragment() {
 
     lateinit var dialog: AlertDialog
 
@@ -19,6 +20,10 @@ class LoadingDialog(private val activity: Activity) {
 
     fun dismissDialog(){
         dialog.dismiss()
+    }
+
+    fun displayReplayButton(){
+        val button = R.id.retryButton;
     }
 
 }
