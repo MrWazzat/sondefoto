@@ -29,7 +29,7 @@ android {
     productFlavors {
         dev {
             dimension "environment"
-            buildConfigField 'String', "RECEIVER_EMAIL", '"raphael.marzat@gmail.com"'
+            buildConfigField 'String', "RECEIVER_EMAIL", '"prod@sondefor.fr"'
             buildConfigField 'String', "SENDER_EMAIL", '"prod@sondefor.fr"'
             versionNameSuffix "-dev"
             applicationIdSuffix ".dev"

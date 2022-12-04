@@ -1,11 +1,18 @@
 package com.example.sondefoto
 
 import android.Manifest
+import android.Manifest.permission.*
+import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.media.MediaScannerConnection
 import android.os.*
+import android.os.Build.VERSION_CODES.S
+import android.telephony.SubscriptionInfo
+import android.telephony.SubscriptionManager
+import android.telephony.TelephonyManager
 import android.util.Log
 import android.widget.Toast
 import androidx.activity.viewModels
@@ -31,7 +38,6 @@ import java.nio.file.Paths
 class PicturePreview : AppCompatActivity() {
 
     private val sondeforDirectoryName = "SONDEFOR Production/"
-    private val permission = 101
     private val viewModel: LoadingMailViewModel by viewModels()
 
     private lateinit var binding: ActivityPicturePreviewBinding
@@ -47,23 +53,16 @@ class PicturePreview : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityPicturePreviewBinding.inflate(layoutInflater)
-
-        phoneNumber = "?????????"
-
         setContentView(binding.root)
 
+        //Init variables
+        phoneNumber = getPhoneNumber()
         sessionmanager = SessionManager(this)
-
         toSaisieChantier = Intent(this, SaisieChantier::class.java)
-
         imagePath = intent.getStringExtra("IMAGE_PATH")!!
         bitmap = BitmapFactory.decodeFile(imagePath)
-
         binding.imageView.setImageBitmap(bitmap)
-
-
         binding.tvNumChantier.text = String.format("Chantier n° %s", sessionmanager.getString(NUM_CHANTIER_KEY))
-
         viewModel.setCallback { sendEmail() }
 
         binding.btnValidate.setOnClickListener {
@@ -96,7 +95,7 @@ class PicturePreview : AppCompatActivity() {
                 .successCallback(::successCallback)
                 .failureCallback(::failureCallback)
                 .build()
-                .sendMail(applicationContext)
+                .sendMail()
     }
 
     fun successCallback() {
@@ -116,8 +115,8 @@ class PicturePreview : AppCompatActivity() {
 
     @RequiresApi(Build.VERSION_CODES.O)
     fun persistImageToPicturesDirectory(bitmap: Bitmap){
-        ActivityCompat.requestPermissions(this,  arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE,
-            Manifest.permission.MANAGE_EXTERNAL_STORAGE), 1)
+        ActivityCompat.requestPermissions(this,  arrayOf(READ_EXTERNAL_STORAGE,
+            MANAGE_EXTERNAL_STORAGE), 1)
         try{
             val directory = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).path + "/" + sondeforDirectoryName
             val newFile = createFile(directory, System.currentTimeMillis().toString() + ".jpg")
@@ -147,5 +146,24 @@ class PicturePreview : AppCompatActivity() {
         }
 
         return newFile
+    }
+
+    fun getPhoneNumber(): String{
+        val telManager = applicationContext.getSystemService(Context.TELEPHONY_SERVICE) as TelephonyManager
+
+        if ( ActivityCompat.checkSelfPermission(
+                this,
+                Manifest.permission.READ_PHONE_NUMBERS
+            ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
+                this,
+                Manifest.permission.READ_PHONE_STATE
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                requestPermissions(arrayOf(READ_SMS, READ_PHONE_NUMBERS, READ_PHONE_STATE), 100)
+            }
+        }
+
+        return telManager.line1Number ?: "??????????"
     }
 }

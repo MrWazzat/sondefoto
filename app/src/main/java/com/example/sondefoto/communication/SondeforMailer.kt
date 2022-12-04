@@ -21,14 +21,15 @@ class SondeforMailer private constructor(
     val failureCallback: () -> Unit,
 ){
 
-    private val SMTP_SERVER = "email.sondefor.fr"
+    private val SMTP_SERVER = "mail.sondefor.fr"
     private val SMTP_PORT = "587"
 
-    private val SMTP_USERNAME = "test@sondefor.fr"
-    private val SMTP_PASSWORD = "!77OgQdmh93s"
+    private val SMTP_USERNAME = "prod@sondefor.fr"
+    private val SMTP_PASSWORD = "(2:~V0l@5a)S"
 
-    fun sendMail(context: Context) {
+    fun sendMail() {
         MaildroidX.Builder()
+            .isStartTLSEnabled(true)
             .smtp(SMTP_SERVER)
             .smtpUsername(SMTP_USERNAME)
             .smtpPassword(SMTP_PASSWORD)
